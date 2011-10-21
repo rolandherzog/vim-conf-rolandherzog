@@ -1,0 +1,179 @@
+set backspace=indent,eol,start
+set encoding=utf8
+
+" Additions by Roland Herzog
+" ---------------------------
+
+" Set GUI options
+set guioptions-=m
+set guioptions-=T
+
+" Enable actions on file load
+filetype plugin on           "invoke plugin for all filetypes
+filetype indent on           "enables automatic indentation 
+
+" Set search path
+set path+=~/Work/Teaching/Exercises/**
+set path+=~/Work/WWW/**
+set path+=~/Work/Achievements/CV/**
+let texpath = $TEXINPUTS
+let texpath = substitute(texpath, ':', ',', 'g')
+let texpath = substitute(texpath, '//', '/**', 'g')
+let &path = &path . ',' . texpath
+let bibpath = $BIBINPUTS
+let bibpath = substitute(bibpath, ':', ',', 'g')
+let bibpath = substitute(bibpath, '//', '/**', 'g')
+let &path = &path . ',' . bibpath
+
+" Set color scheme
+" see http://www.vi-improved.org/color_sampler_pack/
+colorscheme papayawhip
+colorscheme chela_light
+colorscheme sienna
+
+" Control the initial size of the vim or gvim window
+set lines=50 columns=100
+
+" Disable modelines due to security concerns, see http://www.guninski.com/vim1.html
+set modelines=0
+
+" Set statusline
+set statusline= 
+set statusline+=%<\                       " cut at start 
+set statusline+=%2*[%n%H%M%R%W]%*\        " flags 
+set statusline+=%-40f\                    " path 
+set statusline+=%=%1*%y%*%*\              " file type 
+set statusline+=%10((%l,%c)%)\            " line and column 
+set statusline+=%P                        " percentage of file 
+set laststatus=2                          " always show statusline
+
+" Set max # of tabs (default is 10)
+set tabpagemax=20
+
+" Set syntax highlighting on
+syntax on
+
+" Increase undolevels
+set undolevels=1000
+
+" Keep a long command history (default is 20)
+set history=200
+
+" Set some search options
+set smartcase                " select smart case in search patterns 
+set ignorecase               " must be set to make smartcase work
+set hlsearch                 " enable search highlight
+set showmatch                " show matching brackets while typing
+set incsearch
+
+" Set some diff options
+set diffopt=filler,iwhite
+
+" Settings related to tab stops
+set tabstop=2
+set softtabstop=0            "
+set noexpandtab              " 
+set list                     " show tabs as CTRL-I
+set listchars=tab:\|\        " what to show instead of a tab (CTRL-I)
+set shiftwidth=2             " # of spaces to use for each step of (auto)indent
+
+" Turn autoindent on
+set autoindent
+
+" How to show wrapped lines
+set showbreak=>\
+set showbreak=...
+
+" Autocomplete like the bash
+set wildmode=longest,list
+set completeopt=longest,menuone
+
+" Set scroll behavior
+set scrolloff=5             " keep at least 5 lines above/below cursor
+set sidescrolloff=5         " keep at least 5 columns left/right of cursor
+
+" Turn off the error beep, make it visual instead
+set visualbell
+
+" Watch for file changes outside of vim and reload
+set autoread
+
+" Do not automatically write on :next etc.
+set noautowrite
+set noautowriteall
+
+" Clear all mappings
+mapclear
+
+" Some key mappings in insert mode
+imap <M-k> <Up>
+imap <M-h> <Left>
+imap <M-j> <Down>
+imap <M-l> <Right>
+imap <M-j> {
+imap <M-k> }
+imap <M-i> (
+imap <M-o> )
+imap <M-n> [
+imap <M-m> ]
+" imap IMAP ('<M-a>', '\added[RH]{<++>}<++>', "tex")
+" imap IMAP ('<M-d>', '\deleted[RH]{<++>}<++>', "tex")
+" imap IMAP ('<M-r>', '\replaced[RH]{<++>}{<++>}<++>', "tex")
+" inoremap <M-a> \added[RH]{}
+" inoremap <M-d> \deleted[RH]{}
+" inoremap <M-r> \replaced[RH]{}{}
+imap <C-s> <C-o>:w<CR>
+imap <C-S-s> <C-o>:wall<CR>
+inoremap <ESC> <ESC><Right>
+
+" Some key mappings in normal mode
+nmap <M-o> :tabnext<CR>
+nmap <M-i> :tabNext<CR>
+nmap <M-1> 1gt
+nmap <M-2> 2gt
+nmap <M-3> 3gt
+nmap <M-4> 4gt
+nmap <M-5> 5gt
+nmap <M-6> 6gt
+nmap <M-7> 7gt
+nmap <M-8> 8gt
+nmap <M-9> 9gt
+nmap <C-x><C-f> :tabfind 
+nmap <C-x><C-n> :tabnew 
+nmap <C-s> :w<CR>
+nmap <C-S-s> :wall<CR>
+nmap <C-x><C-c> :quit<CR>
+nmap <C-x>k :bd<CR>
+
+
+" Settings related to the latex-suite
+" -----------------------------------
+" empty .tex files have 'latex' file type
+let g:tex_flavor='latex'
+
+
+
+""" Enhanced Commentify:
+" -----------------------------------
+" Nice indentation:     
+let EnhCommentifyRespectIndent = 'yes'
+let EnhCommentifyPretty = 'yes'       
+let EnhCommentifyUseBlockIndent = 'yes'
+" Use large comment blocks             
+let EnhCommentifyMultiPartBlocks = 'yes'
+" Own Bindings                          
+let EnhCommentifyUserBindings = 'yes'   
+" Für Markierungen und sowas wie 3<C-C> im Normalmodus:
+nmap <silent> <c-c> :MyEnhancedCommentify<CR>          
+vmap <silent> <c-c> :MyEnhancedCommentify<CR>          
+command! -range MyEnhancedCommentify call EnhancedCommentify('yes', 'first', <line1>, <line2>)
+
+" Some useful macros
+" -----------------------------------
+" \added[...]{text} -> text
+let @b='dt{ma%x`ax'
+" \deleted[...]{text} -> 
+let @e='dt{daB'
+" \replaced[...]{text1}{text2} -> text1
+let @s='dt{ma%xldaB`ax'
+
