@@ -89,7 +89,7 @@ set wildmode=longest,list
 set completeopt=longest,menuone
 
 " Set scroll behavior
-set scrolloff=5             " keep at least 5 lines above/below cursor
+set scrolloff=3             " keep at least 3 lines above/below cursor
 set sidescrolloff=5         " keep at least 5 columns left/right of cursor
 
 " Turn off the error beep, make it visual instead
