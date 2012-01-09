@@ -28,10 +28,6 @@ set grepprg=grep\ -nH\ $*
 " do not spell-check in tex comments
 let g:tex_comment_nospell=1
 
-" This helps to cycle through figure labels etc.
-set iskeyword+=:
-set iskeyword+=\
-
 " Change the shiftwidth
 set tabstop=2
 set shiftwidth=2
