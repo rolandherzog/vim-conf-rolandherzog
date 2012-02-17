@@ -13,11 +13,18 @@ let g:Tex_EnvLabelprefix_align = "eq:"
 let g:Tex_EnvLabelprefix_equation = "eq:"
 let g:Tex_EnvLabelprefix_subequations = "eq:"
 
+" Use custom placeholders (which do not collide with LaTeX beamer <1-> etc.)
+let g:Imap_PlaceHolderStart = '<<+'
+let g:Imap_PlaceHolderEnd = '+>>'
+
 " Place labels before content
 let g:Tex_LabelAfterContent = 0
 
 " Environments should end in <CR><++>
 let g:Tex_EnvEndWithCR = 1
+
+" WORK HERE
+"call s:Tex_EnvMacros('FRA', '&Structure.', 'myframebox')
 
 " things associated with for forward search
 let g:Tex_DefaultTargetFormat = 'pdf'
