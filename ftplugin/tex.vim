@@ -1,6 +1,10 @@
 " We set some latex specific settings here
 " ----------------------------------------
 
+" Debug mode
+" let g:Tex_Debug = 1
+" let g:Tex_DebugLog = "/tmp/vim-latex-suite.log"
+
 " Customization of environment labels
 let g:Tex_EnvLabelprefix_assumption = "assumption:"
 let g:Tex_EnvLabelprefix_definition = "definition:"
@@ -29,6 +33,7 @@ let g:Tex_EnvEndWithCR = 1
 " things associated with for forward search
 let g:Tex_DefaultTargetFormat = 'pdf'
 let g:Tex_ViewRule_pdf = 'synctex_wrapper'
+" let g:Tex_ViewRule_pdf = 'okular'
 
 " make grep always generate a file name 
 set grepprg=grep\ -nH\ $*
