@@ -1,6 +1,10 @@
 " We set some latex specific settings here
 " ----------------------------------------
 
+" Debug mode
+" let g:Tex_Debug = 1
+" let g:Tex_DebugLog = "/tmp/vim-latex-suite.log"
+
 " Customization of environment labels
 let g:Tex_EnvLabelprefix_assumption = "assumption:"
 let g:Tex_EnvLabelprefix_definition = "definition:"
@@ -13,15 +17,23 @@ let g:Tex_EnvLabelprefix_align = "eq:"
 let g:Tex_EnvLabelprefix_equation = "eq:"
 let g:Tex_EnvLabelprefix_subequations = "eq:"
 
+" Use custom placeholders (which do not collide with LaTeX beamer <1-> etc.)
+let g:Imap_PlaceHolderStart = '<<+'
+let g:Imap_PlaceHolderEnd = '+>>'
+
 " Place labels before content
 let g:Tex_LabelAfterContent = 0
 
 " Environments should end in <CR><++>
 let g:Tex_EnvEndWithCR = 1
 
+" WORK HERE
+"call s:Tex_EnvMacros('FRA', '&Structure.', 'myframebox')
+
 " things associated with for forward search
 let g:Tex_DefaultTargetFormat = 'pdf'
 let g:Tex_ViewRule_pdf = 'synctex_wrapper'
+" let g:Tex_ViewRule_pdf = 'okular'
 
 " make grep always generate a file name 
 set grepprg=grep\ -nH\ $*
