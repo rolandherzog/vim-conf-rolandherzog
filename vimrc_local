@@ -106,12 +106,14 @@ set noautowriteall
 mapclear
 
 " Some key mappings in insert mode
-imap <M-k> <Up>
-imap <M-h> <Left>
-imap <M-j> <Down>
-imap <M-l> <Right>
+" imap <M-k> <Up>
+" imap <M-h> <Left>
+" imap <M-j> <Down>
+" imap <M-l> <Right>
 " imap <M-d> (
 " imap <M-f> )
+imap <M-h> (
+imap <M-l> )
 imap <M-j> {
 imap <M-k> }
 imap <M-n> [
