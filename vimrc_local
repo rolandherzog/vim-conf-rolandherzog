@@ -37,6 +37,9 @@ set lines=50 columns=100
 " Disable modelines due to security concerns, see http://www.guninski.com/vim1.html
 set modelines=0
 
+" Turn on line numbers
+set number
+
 " Set statusline
 set statusline= 
 set statusline+=%<\                       " cut at start 
