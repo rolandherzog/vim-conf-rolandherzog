@@ -173,10 +173,16 @@ command! -range MyEnhancedCommentify call EnhancedCommentify('yes', 'first', <li
 
 " Some useful macros
 " -----------------------------------
+" \added[id=RH]{<<++>>}
+let @a='i\added[id=RH]{<<++>>}'
 " \added[...]{text} -> text
 let @b='dt{ma%x`ax'
+" \deleted[id=RH]{<<++>>}
+let @d='i\deleted[id=RH]{<<++>>}'
 " \deleted[...]{text} -> 
 let @e='dt{daB'
+" \replaced[id=RH]{<<++>>}{<<++>>}
+let @d='i\replaced[id=RH]{<<++>>}{<<++>>}'
 " \replaced[...]{text1}{text2} -> text1
 let @s='dt{ma%xldaB`ax'
 
