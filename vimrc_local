@@ -150,6 +150,7 @@ nmap <C-S-s> :wall<CR>
 nmap <C-x><C-c> :quit<CR>
 nmap <C-x>k :bd<CR>
 nmap Y y$
+nnoremap gf <C-w>gf 
 
 
 " Settings related to the latex-suite
