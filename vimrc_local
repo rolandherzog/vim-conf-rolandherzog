@@ -148,7 +148,7 @@ nmap <C-x><C-n> :tabnew
 nmap <C-s> :w<CR>
 nmap <C-S-s> :wall<CR>
 nmap <C-x><C-c> :quit<CR>
-nmap <C-x>k :bd<CR>
+nmap <C-k> :bd<CR>
 nmap Y y$
 nnoremap gf <C-w>gf 
 
