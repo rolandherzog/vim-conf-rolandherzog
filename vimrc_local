@@ -8,6 +8,15 @@ set encoding=utf8
 set guioptions-=m
 set guioptions-=T
 
+" Set GUI font depending on whether external display is attached or not
+if has("gui_running")
+	let shellcmd = 'xrandr -q \| grep "^HDMI1 disconnected"'
+	let output = system(shellcmd)
+	if v:shell_error == 1
+		set guifont=Monospace\ 14
+	endif
+endif
+
 " Enable actions on file load
 filetype plugin on           "invoke plugin for all filetypes
 filetype indent on           "enables automatic indentation 
