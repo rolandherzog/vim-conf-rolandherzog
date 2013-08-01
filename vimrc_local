@@ -9,11 +9,16 @@ set guioptions-=m
 set guioptions-=T
 
 " Set GUI font depending on whether external display is attached or not
+" but on host arwen only
 if has("gui_running")
-	let shellcmd = 'xrandr -q \| grep "^HDMI1 disconnected"'
+	let shellcmd = 'hostname'
 	let output = system(shellcmd)
-	if v:shell_error == 1
-		set guifont=Monospace\ 14
+	if output == 'arwen'
+		let shellcmd = 'xrandr -q \| grep "^HDMI1 disconnected"'
+		let output = system(shellcmd)
+		if v:shell_error == 1
+			set guifont=Monospace\ 14
+		endif
 	endif
 endif
 
