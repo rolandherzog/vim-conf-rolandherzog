@@ -39,6 +39,15 @@ let bibpath = substitute(bibpath, ':', ',', 'g')
 let bibpath = substitute(bibpath, '//', '/**', 'g')
 let &path = &path . ',' . bibpath
 
+" Expand search path to find easily FEniCS header files 
+let shellcmd = 'dolfin-version'
+let output = system(shellcmd)
+let output = substitute(output, "\\n", '', '')
+if output != ""
+	let &path = &path . ',' . substitute('/usr/local/FEniCS/VERSION/src/dolfin-VERSION/dolfin/**', 'VERSION', output, 'g')
+endif
+set suffixesadd=.h
+
 " Set color scheme
 " see http://www.vi-improved.org/color_sampler_pack/
 colorscheme papayawhip
