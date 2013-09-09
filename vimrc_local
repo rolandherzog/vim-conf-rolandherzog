@@ -13,10 +13,10 @@ set guioptions-=T
 if has("gui_running")
 	let shellcmd = 'hostname'
 	let output = system(shellcmd)
-	if output == 'arwen'
-		let shellcmd = 'xrandr -q \| grep "^HDMI1 disconnected"'
+	if output =~ '^arwen.*'
+		let shellcmd = 'xrandr -q | grep "^HDMI1 disconnected"'
 		let output = system(shellcmd)
-		if v:shell_error == 1
+		if v:shell_error == 0
 			set guifont=Monospace\ 14
 		endif
 	endif
