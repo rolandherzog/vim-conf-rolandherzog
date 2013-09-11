@@ -9,14 +9,15 @@ set guioptions-=m
 set guioptions-=T
 
 " Set GUI font depending on whether external display is attached or not
-" but on host arwen only
+" but on host arwen only, or always when vim's environments shows that
+" it is running via SSH 
 if has("gui_running")
 	let shellcmd = 'hostname'
 	let output = system(shellcmd)
 	if output =~ '^arwen.*'
 		let shellcmd = 'xrandr -q | grep "^HDMI1 disconnected"'
 		let output = system(shellcmd)
-		if v:shell_error == 0
+		if v:shell_error == 0 || !empty($SSH_CONNECTION)
 			set guifont=Monospace\ 14
 		endif
 	endif
