@@ -181,7 +181,10 @@ nnoremap gf <C-w>gf
 " -----------------------------------
 " empty .tex files have 'latex' file type
 let g:tex_flavor='latex'
-
+" define which environments are of itemize type
+let g:tex_itemize_env='itemize\|description\|enumerate\|thebibliography\|enumerateroman\|enumeratearabic'
+" do not extra indent continuation lines of an \item
+" let g:tex_indent_items=1
 
 
 """ Enhanced Commentify:
