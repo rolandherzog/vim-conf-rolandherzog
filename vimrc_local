@@ -151,8 +151,8 @@ imap <M-m> ]
 " inoremap <M-a> \added[RH]{}
 " inoremap <M-d> \deleted[RH]{}
 " inoremap <M-r> \replaced[RH]{}{}
-imap <C-s> <C-o>:w<CR>
-imap <C-S-s> <C-o>:wall<CR>
+" imap <C-s> <C-o>:w<CR>
+" imap <C-S-s> <C-o>:wall<CR>
 inoremap <ESC> <ESC><Right>
 
 " Some key mappings in normal mode
@@ -175,7 +175,6 @@ nmap <C-x><C-c> :quit<CR>
 nmap <C-k> :bd<CR>
 nmap Y y$
 nnoremap gf <C-w>gf 
-
 
 " Settings related to the latex-suite
 " -----------------------------------
