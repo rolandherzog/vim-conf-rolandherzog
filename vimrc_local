@@ -19,6 +19,8 @@ if has("gui_running")
 		let output = system(shellcmd)
 		if v:shell_error == 0 || !empty($SSH_CONNECTION)
 			set guifont=Monospace\ 14
+		elseif output =~ '^mab202.*'
+			set guifont=Monospace\ 12
 		endif
 	endif
 endif
@@ -182,7 +184,8 @@ nnoremap gf <C-w>gf
 " empty .tex files have 'latex' file type
 let g:tex_flavor='latex'
 " define which environments are of itemize type
-let g:tex_itemize_env='itemize\|description\|enumerate\|thebibliography\|enumerateroman\|enumeratearabic'
+let g:tex_itemize_env='itemize\|description\|enumerate\|thebibliography\|enumerateroman\|enumeratearabic\|algorithmic'
+let g:tex_items='\\bibitem\|\\item\|\\STATE\|\\IF\|\\ELSE\|\\ELSIF\|\\ENDIF\|\\FOR\|\\FORALL\|\\ENDFOR\|\\WHILE\|\\ENDWHILE\|\\REPEAT\|\\UNTIL\|\\LOOP\|\\ENDLOOP\|\\REQUIRE\|\\ENSURE\|\\RETURN\|\\PRINT'
 " do not extra indent continuation lines of an \item
 " let g:tex_indent_items=1
 
