@@ -252,3 +252,7 @@ endfunction
 " Mapping: Insert the language commands and goto insert mode.
 vmap <silent> gl <esc>:call InsertLang()<CR>i
 
+" Define some abbreviations
+iab <expr> dts strftime("%d.%m.%Y")
+
+
