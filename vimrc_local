@@ -1,5 +1,5 @@
 " Basic settings
-" ---------------------------
+" --------------
 set backspace=indent,eol,start
 set encoding=utf8
 set showcmd
@@ -20,7 +20,7 @@ set modelines=0
 set number
 
 " Set max # of tabs (default is 10)
-set tabpagemax=20
+set tabpagemax=100
 
 " Set syntax highlighting on
 syntax on
@@ -56,8 +56,13 @@ set autoread
 set noautowrite
 set noautowriteall
 
+" Get hostname for some specific actions below
+" --------------------------------------------
+let shellcmd = 'hostname'
+let hostname = system(shellcmd)
+
 " Set GUI options
-" ---------------------------
+" ---------------
 set guioptions-=m
 set guioptions-=T
 
@@ -65,14 +70,12 @@ set guioptions-=T
 " but on host arwen only, or always when vim's environments shows that
 " it is running via SSH 
 if has("gui_running")
-	let shellcmd = 'hostname'
-	let output = system(shellcmd)
-	if output =~ '^arwen.*'
+	if hostname =~ '^arwen.*'
 		let shellcmd = 'xrandr -q | grep "^HDMI1 disconnected"'
-		let output = system(shellcmd)
+		let dummy = system(shellcmd)
 		if v:shell_error == 0 || !empty($SSH_CONNECTION)
 			set guifont=Monospace\ 14
-		elseif output =~ '^mab202.*'
+		elseif hostname =~ '^mab202.*'
 			set guifont=Monospace\ 12
 		endif
 	endif
@@ -84,7 +87,7 @@ filetype plugin on           "invoke plugin for all filetypes
 filetype indent on           "enables automatic indentation 
 
 " Set search path
-" ---------------------------
+" ---------------
 set path+=~/Work/Teaching/Exercises/**
 set path+=~/Work/WWW/**
 set path+=~/Work/Achievements/CV/**
@@ -97,18 +100,34 @@ let bibpath = substitute(bibpath, ':', ',', 'g')
 let bibpath = substitute(bibpath, '//', '/**', 'g')
 let &path = &path . ',' . bibpath
 
-" Expand search path to find easily FEniCS header files 
-" ---------------------------
+" Expand search path to find easily FEniCS and cppmat header files 
+" ----------------------------------------------------------------
+let &path = &path . ',~/Work/Software/cppmat/src/cpp/**'
 let shellcmd = 'dolfin-version'
-let output = system(shellcmd)
-let output = substitute(output, "\\n", '', '')
-if output != ""
-	let &path = &path . ',' . substitute('/usr/local/FEniCS/VERSION/src/dolfin-VERSION/dolfin/**', 'VERSION', output, 'g')
+let dolfin_version = system(shellcmd)
+let dolfin_version = substitute(dolfin_version, "\\n", '', '')
+if dolfin_version != ""
+	echo hostname
+	echo dolfin_version
+	if hostname =~ '^romulus.*'
+		let &path = &path . ',' . substitute('/usr/local/FEniCS/VERSION/src/dolfin-VERSION/dolfin/**', 'VERSION', dolfin_version, 'g')
+	elseif hostname =~ '^arwen.*'
+		let dolfin_src_dir = substitute('/tmp/dolfin-VERSION', 'VERSION', dolfin_version, 'g')
+		echo dolfin_src_dir
+		if !isdirectory(dolfin_src_dir)
+			let shellcmd = '~/bin/get_FEniCS_source'
+			echo shellcmd
+			let dummy = system(shellcmd)
+		endif
+		let &path = &path . ',' . dolfin_src_dir . '/dolfin/**'
+	endif
+	echo &path
 endif
-set suffixesadd=.h
+set suffixesadd=.h,.hpp
+
 
 " Set statusline
-" ---------------------------
+" --------------
 set statusline= 
 set statusline+=%<\                       " cut at start 
 set statusline+=%2*[%n%H%M%R%W]%*\        " flags 
@@ -119,7 +138,7 @@ set statusline+=%P                        " percentage of file
 set laststatus=2                          " always show statusline
 
 " Set some search options
-" ---------------------------
+" -----------------------
 set smartcase                " select smart case in search patterns 
 set ignorecase               " must be set to make smartcase work
 set hlsearch                 " enable search highlight
@@ -127,11 +146,11 @@ set showmatch                " show matching brackets while typing
 set incsearch
 
 " Set some diff options
-" ---------------------------
+" ---------------------
 set diffopt=filler,iwhite
 
 " Settings related to tab stops
-" ---------------------------
+" -----------------------------
 set tabstop=2
 set softtabstop=0            "
 set noexpandtab              " 
@@ -210,8 +229,8 @@ function! s:insert_tex_header()
 endfunction
 autocmd BufNewFile *.tex call <SID>insert_tex_header()
 
-""" Enhanced Commentify:
-" -----------------------------------
+""" Enhanced Commentify
+" ---------------------
 " Nice indentation:     
 let EnhCommentifyRespectIndent = 'yes'
 let EnhCommentifyPretty = 'yes'       
@@ -226,7 +245,7 @@ vmap <silent> <c-c> :MyEnhancedCommentify<CR>
 command! -range MyEnhancedCommentify call EnhancedCommentify('yes', 'first', <line1>, <line2>)
 
 " Some useful macros
-" -----------------------------------
+" ------------------
 " \added[id=RH]{<<++>>}
 let @a='i\added[id=RH]{<<++>>}'
 " \added[...]{text} -> text
@@ -240,8 +259,8 @@ let @d='i\replaced[id=RH]{<<++>>}{<<++>>}'
 " \replaced[...]{text1}{text2} -> text1
 let @s='dt{ma%xldaB`ax'
 
-" Insert a '\langde{' before and '}\langen{}' after the selection.
-" -----------------------------------
+" Insert a '\langde{' before and '}\langen{}' after the selection
+" ---------------------------------------------------------------
 " Helper Function: Insert at position
 function InsertAt(string, pos, insertstring)
 	if a:pos <= 1
