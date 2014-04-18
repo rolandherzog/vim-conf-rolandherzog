@@ -107,21 +107,21 @@ let shellcmd = 'dolfin-version'
 let dolfin_version = system(shellcmd)
 let dolfin_version = substitute(dolfin_version, "\\n", '', '')
 if dolfin_version != ""
-	echo hostname
-	echo dolfin_version
+	" echo hostname
+	" echo dolfin_version
 	if hostname =~ '^romulus.*'
 		let &path = &path . ',' . substitute('/usr/local/FEniCS/VERSION/src/dolfin-VERSION/dolfin/**', 'VERSION', dolfin_version, 'g')
 	elseif hostname =~ '^arwen.*'
 		let dolfin_src_dir = substitute('/tmp/dolfin-VERSION', 'VERSION', dolfin_version, 'g')
-		echo dolfin_src_dir
+		" echo dolfin_src_dir
 		if !isdirectory(dolfin_src_dir)
 			let shellcmd = '~/bin/get_FEniCS_source'
-			echo shellcmd
+			" echo shellcmd
 			let dummy = system(shellcmd)
 		endif
 		let &path = &path . ',' . dolfin_src_dir . '/dolfin/**'
 	endif
-	echo &path
+	" echo &path
 endif
 set suffixesadd=.h,.hpp
 
