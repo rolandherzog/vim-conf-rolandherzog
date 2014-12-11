@@ -214,6 +214,10 @@ nmap <C-k> :bd<CR>
 nmap Y y$
 nmap <LocalLeader>nh :nohlsearch<CR>
 nnoremap gf <C-w>gf 
+" Space in normal-mode => toggle folding (if there is a fold)
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':'l')<CR>
+" Shift-Space in normal-mode => close fold (if there is a fold)
+nnoremap <silent> <S-Space> @=(foldlevel('.')?'zc':'l')<CR>
 
 " Settings related to the latex-suite
 " -----------------------------------
@@ -299,6 +303,8 @@ endfunction
 vmap <silent> gl <esc>:call InsertLang()<CR>i
 
 " Define some abbreviations
-iab <expr> dts strftime("%d.%m.%Y")
+iabbrev dts <C-R>=strftime("%d.%m.%Y")<CR>
+iabbrev ul <ul><CR><li></li><CR></ul>
+iabbrev li <li></li><C-o>4h
 
 
