@@ -4,6 +4,10 @@ set backspace=indent,eol,start
 set encoding=utf8
 set showcmd
 
+" Turn spell check off
+setlocal spell spelllang=en_us
+set spell!
+
 " Set color scheme
 " see http://www.vi-improved.org/color_sampler_pack/
 colorscheme papayawhip
@@ -110,21 +114,22 @@ let dolfin_version = substitute(dolfin_version, "\\n", '', '')
 if dolfin_version != ""
 	" echo hostname
 	" echo dolfin_version
-	if hostname =~ '^romulus.*'
+	if hostname =~ '^riemann.*'
 		let &path = &path . ',' . substitute('/usr/local/FEniCS/VERSION/src/dolfin-VERSION/dolfin/**', 'VERSION', dolfin_version, 'g')
 	elseif hostname =~ '^arwen.*'
-		let dolfin_src_dir = substitute('/tmp/dolfin-VERSION', 'VERSION', dolfin_version, 'g')
+		let dolfin_src_dir = substitute('~/Work/Software/FEniCS-src/dolfin-VERSION', 'VERSION', dolfin_version, 'g')
 		" echo dolfin_src_dir
 		if !isdirectory(dolfin_src_dir)
-			let shellcmd = '~/bin/get_FEniCS_source'
+			" let shellcmd = '~/bin/get_FEniCS_source'
 			" echo shellcmd
-			let dummy = system(shellcmd)
+			" let dummy = system(shellcmd)
 		endif
-		let &path = &path . ',' . dolfin_src_dir . '/dolfin/**'
+		" let &path = &path . ',' . dolfin_src_dir . '/dolfin/**'
+		let &path = dolfin_src_dir . '/dolfin/**' . ',' . &path
 	endif
 	" echo &path
 endif
-set suffixesadd=.h,.hpp
+set suffixesadd+=.h,.hpp
 
 
 " Set statusline
@@ -219,8 +224,8 @@ let g:tex_itemize_env='itemize\|description\|enumerate\|thebibliography\|enumera
 let g:tex_items='\\bibitem\|\\item\|\\STATE\|\\IF\|\\ELSE\|\\ELSIF\|\\ENDIF\|\\FOR\|\\FORALL\|\\ENDFOR\|\\WHILE\|\\ENDWHILE\|\\REPEAT\|\\UNTIL\|\\LOOP\|\\ENDLOOP\|\\REQUIRE\|\\ENSURE\|\\RETURN\|\\PRINT'
 " do not extra indent continuation lines of an \item
 " let g:tex_indent_items=1
-" Turn of spell checking in tex comments (see syntax/tex.vim)
-let g:tex_comment_nospell=1
+" Turn off spell checking in tex comments (see syntax/tex.vim)
+" let g:tex_comment_nospell=1
 
 " Settings related to the latex-suite
 " -----------------------------------
@@ -286,7 +291,7 @@ function InsertLang()
 	if endpos[2] == 2147483647
 		call setpos('.', [endpos[0], endpos[1], endpos[2], 0])
 	else
-		call setpos('.', [endpos[0], endpos[1], endpos[2]+18, 0])
+		call setpos('.', [endpos[0], endpos[1], endpos[2]+17, 0])
 	endif
 endfunction
 
