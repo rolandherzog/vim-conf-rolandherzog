@@ -72,10 +72,10 @@ set guioptions-=m
 set guioptions-=T
 
 " Set GUI font depending on whether external display is attached or not
-" but on host arwen only, or always when vim's environments shows that
+" but on laptop hosts arwen and aragorn only, or always when vim's environments shows that
 " it is running via SSH 
 if has("gui_running")
-	if hostname =~ '^arwen.*'
+	if hostname =~ '^arwen.*' || hostname =~ '^aragorn.*'
 		let shellcmd = 'xrandr -q | grep "^HDMI1 disconnected"'
 		let dummy = system(shellcmd)
 		if v:shell_error == 0 || !empty($SSH_CONNECTION)
@@ -116,7 +116,7 @@ if dolfin_version != ""
 	" echo dolfin_version
 	if hostname =~ '^riemann.*'
 		let &path = &path . ',' . substitute('/usr/local/FEniCS/VERSION/src/dolfin-VERSION/dolfin/**', 'VERSION', dolfin_version, 'g')
-	elseif hostname =~ '^arwen.*'
+	elseif hostname =~ '^arwen.*' || hostname =~ '^aragorn.*'
 		let dolfin_src_dir = substitute('~/Work/Software/FEniCS-src/dolfin-VERSION', 'VERSION', dolfin_version, 'g')
 		" echo dolfin_src_dir
 		if !isdirectory(dolfin_src_dir)
