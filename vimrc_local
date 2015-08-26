@@ -14,6 +14,13 @@ colorscheme papayawhip
 colorscheme chela_light
 colorscheme sienna
 
+" Remove : as a possible character in a file name 
+" (actually, it might appear, but more often than not it is a separator)
+set isfname-=:
+" Allow ( and ) as possible characters in a file name 
+set isfname+=(
+set isfname+=)
+
 " Control the initial size of the vim or gvim window
 set lines=50 columns=100
 
@@ -76,9 +83,9 @@ set guioptions-=T
 " it is running via SSH 
 if has("gui_running")
 	if hostname =~ '^arwen.*' || hostname =~ '^aragorn.*'
-		let shellcmd = 'xrandr -q | grep "^HDMI1 disconnected"'
+		let shellcmd = 'xrandr -q | grep "^HDMI[12] connected"'
 		let dummy = system(shellcmd)
-		if v:shell_error == 0 || !empty($SSH_CONNECTION)
+		if v:shell_error != 0 || !empty($SSH_CONNECTION)
 			set guifont=Monospace\ 14
 		elseif hostname =~ '^mab202.*'
 			set guifont=Monospace\ 12
@@ -104,6 +111,7 @@ let bibpath = $BIBINPUTS
 let bibpath = substitute(bibpath, ':', ',', 'g')
 let bibpath = substitute(bibpath, '//', '/**', 'g')
 let &path = &path . ',' . bibpath
+set suffixesadd+=.sty
 
 " Expand search path to find easily FEniCS and cppmat header files 
 " ----------------------------------------------------------------
@@ -164,6 +172,11 @@ set list                     " show tabs as CTRL-I
 set listchars=tab:\|\        " what to show instead of a tab (CTRL-I)
 set shiftwidth=2             " # of spaces to use for each step of (auto)indent
 
+" Override some settings for python files
+" ---------------------------------------
+autocmd FileType python setlocal shiftwidth=2 tabstop=2 expandtab
+
+
 " Clear all mappings
 mapclear
 
@@ -214,6 +227,8 @@ nmap <C-k> :bd<CR>
 nmap Y y$
 nmap <LocalLeader>nh :nohlsearch<CR>
 nnoremap gf <C-w>gf 
+" http://stackoverflow.com/questions/7810845/how-to-open-pdf-files-under-cursor-using-gf-with-external-pdf-readers-in-vim
+" nnoremap gg :!okular <cfile> &<CR> 
 " Space in normal-mode => toggle folding (if there is a fold)
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':'l')<CR>
 " Shift-Space in normal-mode => close fold (if there is a fold)
@@ -228,8 +243,13 @@ let g:tex_itemize_env='itemize\|description\|enumerate\|thebibliography\|enumera
 let g:tex_items='\\bibitem\|\\item\|\\STATE\|\\IF\|\\ELSE\|\\ELSIF\|\\ENDIF\|\\FOR\|\\FORALL\|\\ENDFOR\|\\WHILE\|\\ENDWHILE\|\\REPEAT\|\\UNTIL\|\\LOOP\|\\ENDLOOP\|\\REQUIRE\|\\ENSURE\|\\RETURN\|\\PRINT'
 " do not extra indent continuation lines of an \item
 " let g:tex_indent_items=1
+let g:tex_items='\\bibitem\|\\item\|\\STATE'
+" vim will try to align the line with first '&'
+let g:tex_indent_and=1
 " Turn off spell checking in tex comments (see syntax/tex.vim)
 " let g:tex_comment_nospell=1
+" Turn off indenting within the following environments
+let g:tex_noindent_env = 'document\|verbatim\|lstlisting'
 
 " Settings related to the latex-suite
 " -----------------------------------
@@ -238,6 +258,12 @@ function! s:insert_tex_header()
 	normal! j
 endfunction
 autocmd BufNewFile *.tex call <SID>insert_tex_header()
+
+" Enable opening pdf files in an external viewer
+" ----------------------------------------------
+" http://stackoverflow.com/questions/7810845/how-to-open-pdf-files-under-cursor-using-gf-with-external-pdf-readers-in-vim
+autocmd BufReadCmd *pdf silent !okular % &
+autocmd BufEnter *.pdf exe "normal! \<c-o>"
 
 """ Enhanced Commentify
 " ---------------------
