@@ -4,6 +4,9 @@ set backspace=indent,eol,start
 set encoding=utf8
 set showcmd
 
+" Don't recognize _ as a word separator
+set iskeyword+=_
+
 " Turn spell check off
 setlocal spell spelllang=en_us
 set spell!
@@ -129,7 +132,7 @@ if dolfin_version != ""
 	endif
 	" echo &path
 endif
-set suffixesadd+=.h,.hpp
+set suffixesadd+=.h,.hpp.,sty
 
 
 " Set statusline
@@ -268,6 +271,9 @@ let @e='dt{daB'
 let @d='i\replaced[id=RH]{<<++>>}{<<++>>}'
 " \replaced[...]{text1}{text2} -> text1
 let @s='dt{ma%xldaB`ax'
+" find \added, \deleted, \replaced
+let @c='/\\\(added\|deleted\|replaced\)'
+
 
 " Insert a '\langde{' before and '}\langen{}' after the selection
 " ---------------------------------------------------------------
