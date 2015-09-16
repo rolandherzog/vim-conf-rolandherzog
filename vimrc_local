@@ -140,7 +140,7 @@ if dolfin_version != ""
 	endif
 	" echo &path
 endif
-set suffixesadd+=.h,.hpp.,sty
+set suffixesadd+=.h,.hpp.
 
 
 " Set statusline
