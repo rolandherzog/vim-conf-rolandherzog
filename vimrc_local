@@ -253,6 +253,8 @@ let g:tex_indent_and=1
 " let g:tex_comment_nospell=1
 " Turn off indenting within the following environments
 let g:tex_noindent_env = 'document\|verbatim\|lstlisting'
+" We are not using $$ (needed for changing environments, <S-F5>
+let b:DoubleDollars = 0
 
 " Settings related to the latex-suite
 " -----------------------------------
