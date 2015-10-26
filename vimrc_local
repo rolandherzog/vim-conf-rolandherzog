@@ -4,6 +4,9 @@ set backspace=indent,eol,start
 set encoding=utf8
 set showcmd
 
+" Automatically set the directory to directory of the 'current' file etc.
+set autochdir
+
 " Don't recognize _ as a word separator
 set iskeyword+=_
 
@@ -50,15 +53,15 @@ set autoindent
 
 " How to show wrapped lines
 set showbreak=>\
-set showbreak=...
+set showbreak=.
 
 " Autocomplete like the bash
 set wildmode=longest,list
 set completeopt=longest,menuone
 
 " Set scroll behavior
-set scrolloff=3             " keep at least 3 lines above/below cursor
 set scrolloff=100           " keep cursor vertically in the middle of the window 
+set scrolloff=3             " keep at least 3 lines above/below cursor
 set sidescrolloff=5         " keep at least 5 columns left/right of cursor
 
 " Turn off the error beep, make it visual instead
@@ -70,6 +73,25 @@ set autoread
 " Do not automatically write on :next etc.
 set noautowrite
 set noautowriteall
+
+" Improve editing of command line during file browsing
+" --------------------------------------------
+" http://vim.wikia.com/wiki/Command_line_file_name_completion
+cnoremap <C-t> <C-\>e(<SID>RemoveLastPathComponent())<CR>
+function! s:RemoveLastPathComponent()
+	return substitute(getcmdline(), '\%(\\ \|[\\/]\@!\f\)\+[\\/]\=$\|.$', '', '')
+endfunction
+
+function! s:RemoveLastPathComponent()
+	let l:cmdlineBeforeCursor = strpart(getcmdline(), 0, getcmdpos() - 1)
+	let l:cmdlineAfterCursor = strpart(getcmdline(), getcmdpos() - 1)
+	let l:cmdlineRoot = fnamemodify(cmdlineBeforeCursor, ':r')
+	let l:result = (l:cmdlineBeforeCursor ==# l:cmdlineRoot ? substitute(l:cmdlineBeforeCursor, '\%(\\ \|[\\/]\@!\f\)\+[\\/]\=$\|.$', '', '') : l:cmdlineRoot)
+	call setcmdpos(strlen(l:result) + 1)
+	return l:result . l:cmdlineAfterCursor
+endfunction
+cnoremap <C-BS> <C-\>e(<SID>RemoveLastPathComponent())<CR>
+
 
 " Get hostname for some specific actions below
 " --------------------------------------------
@@ -265,8 +287,13 @@ autocmd BufNewFile *.tex call <SID>insert_tex_header()
 " Enable opening pdf files in an external viewer
 " ----------------------------------------------
 " http://stackoverflow.com/questions/7810845/how-to-open-pdf-files-under-cursor-using-gf-with-external-pdf-readers-in-vim
-autocmd BufReadCmd *pdf silent !okular % &
+autocmd BufReadCmd *.pdf silent !okular % &
 autocmd BufEnter *.pdf exe "normal! \<c-o>"
+
+" Override file types for certain files
+" ----------------------------------------------
+autocmd BufRead blog.txt set filetype=html
+autocmd BufRead studiendekan.txt set filetype=html
 
 """ Enhanced Commentify
 " ---------------------
