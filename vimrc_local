@@ -114,7 +114,7 @@ if has("gui_running")
 		let dummy = system(shellcmd)
 		if v:shell_error != 0 || !empty($SSH_CONNECTION)
 			if hostname =~ '^Thranduil.*'
-				set guifont=Monospace\ 20
+				set guifont=Monospace\ 12
 			else
 				set guifont=Monospace\ 14
 			endif
