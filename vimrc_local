@@ -231,12 +231,6 @@ imap <M-j> {
 imap <M-k> }
 imap <M-n> [
 imap <M-m> ]
-" imap IMAP ('<M-a>', '\added[RH]{<++>}<++>', "tex")
-" imap IMAP ('<M-d>', '\deleted[RH]{<++>}<++>', "tex")
-" imap IMAP ('<M-r>', '\replaced[RH]{<++>}{<++>}<++>', "tex")
-" inoremap <M-a> \added[RH]{}
-" inoremap <M-d> \deleted[RH]{}
-" inoremap <M-r> \replaced[RH]{}{}
 " imap <C-s> <C-o>:w<CR>
 " imap <C-S-s> <C-o>:wall<CR>
 inoremap <ESC> <ESC><Right>
@@ -270,24 +264,6 @@ nnoremap <silent> <Space> @=(foldlevel('.')?'za':'l')<CR>
 " Shift-Space in normal-mode => close fold (if there is a fold)
 nnoremap <silent> <S-Space> @=(foldlevel('.')?'zc':'l')<CR>
 
-" Settings related to the latex-suite
-" -----------------------------------
-" empty .tex files have 'latex' file type
-let g:tex_flavor='latex'
-" define which environments are of itemize type
-let g:tex_itemize_env='itemize\|description\|enumerate\|thebibliography\|enumerateroman\|enumeratearabic\|algorithmic'
-let g:tex_items='\\bibitem\|\\item\|\\STATE\|\\IF\|\\ELSE\|\\ELSIF\|\\ENDIF\|\\FOR\|\\FORALL\|\\ENDFOR\|\\WHILE\|\\ENDWHILE\|\\REPEAT\|\\UNTIL\|\\LOOP\|\\ENDLOOP\|\\REQUIRE\|\\ENSURE\|\\RETURN\|\\PRINT'
-" do not extra indent continuation lines of an \item
-" let g:tex_indent_items=1
-let g:tex_items='\\bibitem\|\\item\|\\STATE'
-" vim will try to align the line with first '&'
-let g:tex_indent_and=1
-" Turn off spell checking in tex comments (see syntax/tex.vim)
-" let g:tex_comment_nospell=1
-" Turn off indenting within the following environments
-let g:tex_noindent_env = 'document\|verbatim\|lstlisting'
-" We are not using $$ (needed for changing environments, <S-F5>
-let b:DoubleDollars = 0
 
 " Settings related to the latex-suite
 " -----------------------------------
@@ -323,59 +299,6 @@ nmap <silent> <c-c> :MyEnhancedCommentify<CR>
 vmap <silent> <c-c> :MyEnhancedCommentify<CR>          
 command! -range MyEnhancedCommentify call EnhancedCommentify('yes', 'first', <line1>, <line2>)
 
-" Some useful macros
-" ------------------
-" \added[id=RH]{<<++>>}
-let @a='i\added[id=RH]{<<++>>}'
-" \added[...]{text} -> text
-let @b='dt{ma%x`ax'
-" \deleted[id=RH]{<<++>>}
-let @d='i\deleted[id=RH]{<<++>>}'
-" \deleted[...]{text} -> 
-let @e='dt{daB'
-" \replaced[id=RH]{<<++>>}{<<++>>}
-let @d='i\replaced[id=RH]{<<++>>}{<<++>>}'
-" \replaced[...]{text1}{text2} -> text1
-let @s='dt{ma%xldaB`ax'
-" find \added, \deleted, \replaced
-let @c='/\\\(added\|deleted\|replaced\)'
-
-
-" Insert a '\langde{' before and '}\langen{}' after the selection
-" ---------------------------------------------------------------
-" Helper Function: Insert at position
-function InsertAt(string, pos, insertstring)
-	if a:pos <= 1
-		return a:insertstring . a:string
-	else
-		return a:string[:(a:pos-1)] . a:insertstring . a:string[(a:pos):]
-	endif
-endfunction
-
-" Helper function to facilitate language translations
-" using \langde{} and \langen{}
-" ---------------------------------------------------------------
-function InsertLang()
-	" Get the positions from the last (or current) selection
-	let startpos = getpos("'<")
-	let endpos = getpos("'>")
-	" Modify the lines
-	let endline = getline(endpos[1])
-	let endline = InsertAt(endline, endpos[2], '}<<++>>\langen{<<++>>}')
-	call setline(endpos[1], endline)
-	let startline = getline(startpos[1])
-	let startline = InsertAt(startline, startpos[2]-1, '\langde{')
-	call setline(startpos[1], startline)
-	" Set the cursor position
-	if endpos[2] == 2147483647
-		call setpos('.', [endpos[0], endpos[1], endpos[2], 0])
-	else
-		call setpos('.', [endpos[0], endpos[1], endpos[2]+17, 0])
-	endif
-endfunction
-
-" Mapping: Insert the language commands and goto insert mode
-vmap <silent> gl <esc>:call InsertLang()<CR>i
 
 " Define some abbreviations
 " insert current date
