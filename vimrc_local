@@ -10,6 +10,9 @@ set autochdir
 " Don't recognize _ as a word separator
 set iskeyword+=_
 
+" Do recognize \ as a word separator
+set iskeyword-=\
+
 " Turn spell check off
 setlocal spell spelllang=en_us
 set spell!
@@ -289,7 +292,7 @@ autocmd BufNewFile *.tex call <SID>insert_tex_header()
 " Enable opening pdf files in an external viewer
 " ----------------------------------------------
 " http://stackoverflow.com/questions/7810845/how-to-open-pdf-files-under-cursor-using-gf-with-external-pdf-readers-in-vim
-autocmd BufReadCmd *.pdf silent !okular % &
+autocmd BufReadCmd *.pdf silent !okular '%' &
 autocmd BufEnter *.pdf exe "normal! \<c-o>"
 
 " Override file types for certain files
