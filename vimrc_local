@@ -8,6 +8,8 @@ set showcmd
 set autochdir
 
 " Don't recognize _ as a word separator
+" This gets overwritten by some ftplugin scripts, see
+" verbose: set iskeyword?
 set iskeyword+=_
 
 " Do recognize \ as a word separator
@@ -107,17 +109,22 @@ set guioptions-=m
 set guioptions-=T
 
 " Set GUI font depending on whether external display is attached or not
-" but on laptop hosts arwen and aragorn only, or always when vim's environments shows that
-" it is running via SSH 
+" but on laptop hosts arwen, aragorn and thranduil only, or always when 
+" vim's environments shows that it is running via SSH 
 if has("gui_running")
-	if hostname =~ '^arwen.*' || hostname =~ '^aragorn.*'
+	if hostname =~ '^arwen.*' || hostname =~ '^aragorn.*' || hostname =~ '^Thranduil.*'
 		let shellcmd = 'xrandr -q | grep "^HDMI[12] connected"'
 		let dummy = system(shellcmd)
 		if v:shell_error != 0 || !empty($SSH_CONNECTION)
-			set guifont=Monospace\ 14
-		elseif hostname =~ '^mab202.*'
-			set guifont=Monospace\ 12
+			if hostname =~ '^Thranduil.*'
+				set guifont=Monospace\ 12
+			else
+				set guifont=Monospace\ 14
+			endif
 		endif
+	endif
+	if hostname =~ '^mab202.*'
+		set guifont=Monospace\ 14
 	endif
 endif
 
@@ -246,6 +253,7 @@ nmap <M-6> 6gt
 nmap <M-7> 7gt
 nmap <M-8> 8gt
 nmap <M-9> 9gt
+nmap <M-w> :tabnew ~/Work/World.bib<CR>
 nmap <C-x><C-f> :tabfind 
 nmap <C-x><C-n> :tabnew 
 nmap <C-s> :w<CR>
@@ -344,6 +352,9 @@ function InsertAt(string, pos, insertstring)
 	endif
 endfunction
 
+" Helper function to facilitate language translations
+" using \langde{} and \langen{}
+" ---------------------------------------------------------------
 function InsertLang()
 	" Get the positions from the last (or current) selection
 	let startpos = getpos("'<")
@@ -363,12 +374,14 @@ function InsertLang()
 	endif
 endfunction
 
-" Mapping: Insert the language commands and goto insert mode.
+" Mapping: Insert the language commands and goto insert mode
 vmap <silent> gl <esc>:call InsertLang()<CR>i
 
 " Define some abbreviations
+" insert current date
 iabbrev dts <C-R>=strftime("%d.%m.%Y")<CR>
+" insert ul list element
 iabbrev ul <ul><CR><li></li><CR></ul>
+" insert li list element
 iabbrev li <li></li><C-o>4h
-
 
