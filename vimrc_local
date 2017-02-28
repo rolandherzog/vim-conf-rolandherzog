@@ -12,6 +12,9 @@ set autochdir
 " verbose: set iskeyword?
 set iskeyword+=_
 
+" Do recognize \ as a word separator
+set iskeyword-=\
+
 " Turn spell check off
 setlocal spell spelllang=en_us
 set spell!
@@ -106,17 +109,22 @@ set guioptions-=m
 set guioptions-=T
 
 " Set GUI font depending on whether external display is attached or not
-" but on laptop hosts arwen and aragorn only, or always when vim's environments shows that
-" it is running via SSH 
+" but on laptop hosts arwen, aragorn and thranduil only, or always when 
+" vim's environments shows that it is running via SSH 
 if has("gui_running")
-	if hostname =~ '^arwen.*' || hostname =~ '^aragorn.*'
+	if hostname =~ '^arwen.*' || hostname =~ '^aragorn.*' || hostname =~ '^Thranduil.*'
 		let shellcmd = 'xrandr -q | grep "^HDMI[12] connected"'
 		let dummy = system(shellcmd)
 		if v:shell_error != 0 || !empty($SSH_CONNECTION)
-			set guifont=Monospace\ 14
-		elseif hostname =~ '^mab202.*'
-			set guifont=Monospace\ 14
+			if hostname =~ '^Thranduil.*'
+				set guifont=Monospace\ 12
+			else
+				set guifont=Monospace\ 14
+			endif
 		endif
+	endif
+	if hostname =~ '^mab202.*'
+		set guifont=Monospace\ 14
 	endif
 endif
 
@@ -292,7 +300,7 @@ autocmd BufNewFile *.tex call <SID>insert_tex_header()
 " Enable opening pdf files in an external viewer
 " ----------------------------------------------
 " http://stackoverflow.com/questions/7810845/how-to-open-pdf-files-under-cursor-using-gf-with-external-pdf-readers-in-vim
-autocmd BufReadCmd *.pdf silent !okular % &
+autocmd BufReadCmd *.pdf silent !okular '%' &
 autocmd BufEnter *.pdf exe "normal! \<c-o>"
 
 " Override file types for certain files
