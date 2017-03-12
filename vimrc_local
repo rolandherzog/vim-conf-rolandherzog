@@ -308,3 +308,6 @@ iabbrev ul <ul><CR><li></li><CR></ul>
 " insert li list element
 iabbrev li <li></li><C-o>4h
 
+" find SVN conflict marks
+let @r='/\(<<<<<<<\|=======\|>>>>>>>\)'
+

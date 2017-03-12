@@ -23,6 +23,8 @@ let g:tex_items='\\bibitem\|\\item\|\\STATE\|\\IF\|\\ELSE\|\\ELSIF\|\\ENDIF\|\\F
 let g:Tex_ItemStyle_enumerateroman="\\item"
 let g:Tex_ItemStyle_enumeratearabic="\\item "
 let g:Tex_ItemStyle_enumeratealgorithmic="\\STATE "
+let g:Tex_ItemStyle_advantages="\\item "
+let g:Tex_ItemStyle_disadvantages="\\item "
 
 " do not extra indent continuation lines of an \item
 " let g:tex_indent_items=1
@@ -217,7 +219,7 @@ endfunction
 " Insert a '\langde{' before and '}\langen{}' after the selection
 " ---------------------------------------------------------------
 " Helper Function: Insert at position
-function InsertAt(string, pos, insertstring)
+function! InsertAt(string, pos, insertstring)
 	if a:pos <= 1
 		return a:insertstring . a:string
 	else
@@ -228,7 +230,7 @@ endfunction
 " Helper function to facilitate language translations
 " using \langde{} and \langen{}
 " ---------------------------------------------------------------
-function InsertLang()
+function! InsertLang()
 	" Get the positions from the last (or current) selection
 	let startpos = getpos("'<")
 	let endpos = getpos("'>")
