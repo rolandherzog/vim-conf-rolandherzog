@@ -6,9 +6,10 @@
 " let g:Tex_DebugLog = "/tmp/vim-latex-suite.log"
 
 " Customize stuff related to the changes package
-inoremap <M-a> <C-r>=IMAP_PutTextWithMovement('\added[RH]{<++>}')<CR>
-inoremap <M-d> <C-r>=IMAP_PutTextWithMovement('\deleted[RH]{<++>}')<CR>
-inoremap <M-r> <C-r>=IMAP_PutTextWithMovement('\replaced[RH]{<++>}{<++>}')<CR>
+" inoremap <M-a> <C-r>=IMAP_PutTextWithMovement('\added[RH]{<++>}')<CR>
+" <M-d> is identical to ä in gvim...
+" inoremap <M-d> <C-r>=IMAP_PutTextWithMovement('\deleted[RH]{<++>}')<CR>
+" inoremap <M-r> <C-r>=IMAP_PutTextWithMovement('\replaced[RH]{<++>}{<++>}')<CR>
 call IMAP ('ADD', '\added[RH]{<++>}<++>', "tex")
 call IMAP ('DEL', '\deleted[RH]{<++>}<++>', "tex")
 call IMAP ('REP', '\replaced[RH]{<++>}{<++>}<++>', "tex")
