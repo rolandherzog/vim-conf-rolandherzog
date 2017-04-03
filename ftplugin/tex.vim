@@ -1,6 +1,9 @@
 " We set some latex specific settings here
 " ----------------------------------------
 
+" Prefer \cref over \autoref
+let g:Tex_RefCompletionCommand = "cref"
+
 " Debug mode
 " let g:Tex_Debug = 1
 " let g:Tex_DebugLog = "/tmp/vim-latex-suite.log"
