@@ -109,14 +109,14 @@ set guioptions-=m
 set guioptions-=T
 
 " Set GUI font depending on whether external display is attached or not
-" but on laptop hosts arwen, aragorn and thranduil only, or always when 
+" but on laptop hosts arwen, aragorn and thranduil etc. only, or always when 
 " vim's environments shows that it is running via SSH 
 if has("gui_running")
-	if hostname =~ '^arwen.*' || hostname =~ '^aragorn.*' || hostname =~ '^Thranduil.*'
+	if hostname =~ '^arwen.*' || hostname =~ '^aragorn.*' || hostname =~ '^thranduil.*' || hostname =~ '^elrond.*'
 		let shellcmd = 'xrandr -q | grep "^HDMI[12] connected"'
 		let dummy = system(shellcmd)
 		if v:shell_error != 0 || !empty($SSH_CONNECTION)
-			if hostname =~ '^Thranduil.*'
+			if hostname =~ '^thranduil.*'
 				set guifont=Monospace\ 12
 			else
 				set guifont=Monospace\ 14
@@ -136,6 +136,7 @@ filetype indent on           "enables automatic indentation
 " Set search path
 " ---------------
 set path+=~/Work/Teaching/Exercises/**
+set path+=~/Work/Resources/LaTeX/**
 set path+=~/Work/WWW/**
 set path+=~/Work/Achievements/CV/**
 let texpath = $TEXINPUTS
@@ -309,5 +310,5 @@ iabbrev ul <ul><CR><li></li><CR></ul>
 iabbrev li <li></li><C-o>4h
 
 " find SVN conflict marks
-let @r='/\(<<<<<<<\|=======\|>>>>>>>\)'
+let @r='/\(<<<<<<<\||||||||\|=======\|>>>>>>>\)'
 
