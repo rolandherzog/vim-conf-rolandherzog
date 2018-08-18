@@ -172,6 +172,7 @@ endif
 " Configure environments for F5:
 let g:Tex_Env_block = "\\begin{block}{<++>}\<CR><++>\<CR>\\end{block}"
 let g:Tex_Env_frame = "\\begin{frame}\<CR>\\frametitle{<++>}\<CR><++>\<CR>\\end{frame}"
+let g:Tex_Env_columns = "\\begin{columns}[T]\<CR>\\begin{column}{0.48\\textwidth}\<CR><++>\<CR>\\end{column}\<CR>\\hfill\<CR>\\begin{column}{0.48\\textwidth}\<CR><++>\<CR>\\end{column}\<CR>\\end{columns}"
 
 " Begin inline math objects by Gerd Wachsmuth
 " ---------------------------------------------

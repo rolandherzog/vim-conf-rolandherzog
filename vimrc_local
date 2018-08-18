@@ -136,6 +136,7 @@ filetype indent on           "enables automatic indentation
 " Set search path
 " ---------------
 set path+=~/Work/Teaching/Exercises/**
+set path+=~/Work/Resources/LaTeX/**
 set path+=~/Work/WWW/**
 set path+=~/Work/Achievements/CV/**
 let texpath = $TEXINPUTS
@@ -309,5 +310,5 @@ iabbrev ul <ul><CR><li></li><CR></ul>
 iabbrev li <li></li><C-o>4h
 
 " find SVN conflict marks
-let @r='/\(<<<<<<<\|=======\|>>>>>>>\)'
+let @r='/\(<<<<<<<\||||||||\|=======\|>>>>>>>\)'
 
