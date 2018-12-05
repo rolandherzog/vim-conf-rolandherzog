@@ -257,4 +257,6 @@ endfunction
 " Mapping: Insert the language commands and goto insert mode
 vmap <silent> gl <esc>:call InsertLang()<CR>i
 
+" Do recognize \ as a word separator
+set iskeyword-=\
 
