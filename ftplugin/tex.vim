@@ -58,6 +58,11 @@ let @d='i\replaced[id=RH]{<<++>>}{<<++>>}'
 let @s='dt{ma%xldaB`ax'
 " find \added, \deleted, \replaced
 let @c='/\\\(added\|deleted\|replaced\)'
+" \ifthenelse{\boolean{ispreprint}}{A}{B} -> A
+let @p='d%ma%xldaB`axds}'
+" \ifthenelse{\boolean{ispreprint}}{A}{B} -> B
+let @q='d%d%ds}'
+
 
 " Customization of environment labels
 let g:Tex_EnvLabelprefix_assumption = "assumption:"
