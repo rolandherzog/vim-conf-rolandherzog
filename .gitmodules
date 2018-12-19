@@ -13,3 +13,9 @@
 [submodule "bundle/matchit"]
 	path = bundle/matchit
 	url = git@github.com:vim-scripts/matchit.zip.git
+[submodule "bundle/bundle/Colour-Sampler-Pack"]
+	path = bundle/bundle/Colour-Sampler-Pack
+	url = git@github.com:vim-scripts/Colour-Sampler-Pack.git
+[submodule "bundle/Colour-Sampler-Pack"]
+	path = bundle/Colour-Sampler-Pack
+	url = git@github.com:vim-scripts/Colour-Sampler-Pack.git
