@@ -70,7 +70,10 @@ set scrolloff=3             " keep at least 3 lines above/below cursor
 set sidescrolloff=5         " keep at least 5 columns left/right of cursor
 
 " Turn off the error beep, make it visual instead
+" but set to effect to do nothing
+" https://unix.stackexchange.com/questions/5310
 set visualbell
+set t_vb=
 
 " Watch for file changes outside of vim and reload
 set autoread
@@ -137,6 +140,8 @@ filetype indent on           "enables automatic indentation
 " ---------------
 set path+=~/Work/Teaching/Exercises/**
 set path+=~/Work/Resources/LaTeX/**
+set path+=~/Work/Resources/People/**
+set path+=~/Work/Resources/Logos/**
 set path+=~/Work/WWW/**
 set path+=~/Work/Achievements/CV/**
 let texpath = $TEXINPUTS
